@@ -15,10 +15,9 @@ driver.get('https://www.bestbuy.ca/en-ca/product/apple-macbook-air-13-1-6ghz-int
 
 def getRand():
   randNum = random.randint(1,4)
-  print("randNum: ")
-  print(randNum)
+  # print("randNum: ")
+  # print(randNum)
   return randNum 
-
 
 print(driver.title)
 
@@ -150,16 +149,44 @@ while not isComplete:
       EC.presence_of_element_located((By.ID,'shownCardNumber'))
     )
 
+    # TODO
+    # add credit card info to make a test purchase 
+    ccInput.send_keys("4024007103939509")
 
+    expMonthInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'expirationMonth'))
+    )
+
+    print("finding exp month options")
+    expMonthOptions = expMonthInput.find_elements_by_tag_name('option')
+    print("printing exp month options ")
+    for option in expMonthOptions:
+      print("Value is %s" % option.get_attribute("value"))
+
+    expYearInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'expirationYear'))
+    )
+
+    print("finding exp year options")
+    expYearOptions = expYearInput.find_elements_by_tag_name('option')
+    print("printing exp year options")
+
+    for option in expYearOptions:
+      print("Value is %s" % option.get_attribute("value"))
+
+    cvvInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'cvv'))
+    )
+
+    cvvInput.send_keys("123")
+
+    print("horraaayyy")
+ 
     # click the continue button again 
-
 
   except Exception as e:
     print("error :( ", e)
     continue
-
-
-
 
 
 
