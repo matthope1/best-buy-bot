@@ -10,7 +10,8 @@ import random
 # options = uc.ChromeOptions()
 # options.add_experimental_option('exclueSwitches', ["enabled-logging"])
 driver = uc.Chrome()
-driver.get('https://www.bestbuy.ca/en-ca/product/apple-macbook-air-13-1-6ghz-intel-core-i5-8gb-ram-256gb-storage-2019-model-refurbished-grade-a/15265626?icmp=Recos_3across_tp_sllng_prdcts&referrer=PLP_Reco')
+# driver.get('https://www.bestbuy.ca/en-ca/product/apple-macbook-air-13-1-6ghz-intel-core-i5-8gb-ram-256gb-storage-2019-model-refurbished-grade-a/15265626?icmp=Recos_3across_tp_sllng_prdcts&referrer=PLP_Reco')
+driver.get('https://www.bestbuy.ca/en-ca/product/apple-61w-usb-c-power-adapter-mrw22ll-a/13234006?icmp=Recos_4across_y_mght_ls_lk')
 
 
 def getRand():
@@ -186,7 +187,7 @@ while not isComplete:
     # place order button
 
     placeOrderInput = WebDriverWait(driver,10).until(
-      EC.presence_of_element_located(BY.CSS_SELECTOR,'#posElement > section > section.cost-sum-section > button > span')
+      EC.presence_of_element_located((By.CSS_SELECTOR,'#posElement > section > section.cost-sum-section > button > span'))
     )
 
     # placeOrderInput.click()
