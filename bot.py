@@ -66,6 +66,15 @@ while not isComplete:
     )
     guestBtn.click()
 
+    # email
+    # firstname lastname
+    # addresss
+    # city
+    # province
+    # postal Code
+    # country
+    # phone number
+
     print("form input...")
     print("nosleep...")
     #fill in information on shipping form
@@ -86,7 +95,7 @@ while not isComplete:
       EC.presence_of_element_located((By.ID,'lastName'))
     )
 
-    lastNameInput.send_keys("hapmter")
+    lastNameInput.send_keys("hampter")
 
     addressInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'addressLine'))
@@ -113,27 +122,33 @@ while not isComplete:
 
       if option.get_attribute("value") == "ON":
         print("ontario is an option")
+        option.click()
         break
 
+    postalCodeInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'postalCode'))
+    )
 
-    # email
-    # firstname lastname
-    # addresss
-    # city
-    # province
-    # postal Code
-    # country
-    # phone number
+    postalCodeInput.send_keys("K1A 0B1")
+    phoneInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'phone'))
+    )
+
+    phoneInput.send_keys("17052309906")
   
     # after info is filled out, press the continue button
+    time.sleep(getRand())
+    continueBtn= WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.CSS_SELECTOR,'#posElement > section > section.cost-sum-section > button > span'))
+    )
 
-    # continueBtn= WebDriverWait(driver,10).until(
-    #   EC.presence_of_element_located((By.CSS_SELECTOR,'#posElement > section > section.cost-sum-section > button > span'))
-    # )
-
-    # continueBtn.click()
+    continueBtn.click()
 
     # fill in credit card information
+
+    ccInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'shownCardNumber'))
+    )
 
 
     # click the continue button again 
