@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+import time
+
 driver = uc.Chrome()
 driver.get('https://www.bestbuy.ca/en-ca/product/apple-macbook-air-13-1-6ghz-intel-core-i5-8gb-ram-256gb-storage-2019-model-refurbished-grade-a/15265626?icmp=Recos_3across_tp_sllng_prdcts&referrer=PLP_Reco')
 
@@ -28,27 +30,39 @@ while not isComplete:
     continue
 
   try:
+
+    time.sleep(2)
     # wait for view cart button
     gtcBtn = WebDriverWait(driver,10).until( 
       EC.presence_of_element_located((By.CSS_SELECTOR, '#cartIcon > div.confirmation_2-j2W > div > div > div > section > div > button > span'))
     )
     gtcBtn.click()
     
+    time.sleep(4)
     # wait for checkout button
     checkoutBtn = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.CSS_SELECTOR,'#root > div > div.pageContent_1vNlW > div.loader_3thnw > div.loadedContent_2Wp84 > section > div > main > section > section.cost-sum-section_3pPEp > div:nth-child(3) > div > a > span'))
     )
     checkoutBtn.click()
 
+    time.sleep(1)
     # wait for checkout as guest button
     guestBtn = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.CSS_SELECTOR,'#root > div > div.other-context-sign-in-page-content-container > div > div > div > div.VyTnq._1tm4U.h8UpA._24uQr > div > div.guest-continue-link-wrapper > a > span'))
     )
     guestBtn.click()
 
-    print("here is where we start filling in forms")
+    print("email input...")
     #fill in information on shipping form
     # select the form items and add info to them by using element.sendKeys("data to insert into form")
+
+    time.sleep(3)
+
+    emailInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'email'))
+    )
+      
+    emailInput.send_keys("test@gmail.com")
 
     # email
     # firstname lastname
