@@ -9,5 +9,5 @@ usage:
 Make sure to add your cc details to data.txt
 
 ```
-$ python boy.py
+$ python bot.py
 ```
