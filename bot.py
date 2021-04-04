@@ -6,6 +6,9 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import random
 
+
+# options = uc.ChromeOptions()
+# options.add_experimental_option('exclueSwitches', ["enabled-logging"])
 driver = uc.Chrome()
 driver.get('https://www.bestbuy.ca/en-ca/product/apple-macbook-air-13-1-6ghz-intel-core-i5-8gb-ram-256gb-storage-2019-model-refurbished-grade-a/15265626?icmp=Recos_3across_tp_sllng_prdcts&referrer=PLP_Reco')
 
@@ -63,55 +66,54 @@ while not isComplete:
     )
     guestBtn.click()
 
-    print("email input...")
+    print("form input...")
+    print("nosleep...")
     #fill in information on shipping form
     # select the form items and add info to them by using element.sendKeys("data to insert into form")
 
-    time.sleep(getRand())
-    # time.sleep(1)
     emailInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'email'))
     )
     emailInput.send_keys("test@gmail.com")
 
-    time.sleep(getRand())
     firstNameInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'firstName'))
     )
     
     firstNameInput.send_keys("john")
 
-    time.sleep(getRand())
     lastNameInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'lastName'))
     )
 
     lastNameInput.send_keys("hapmter")
 
-    # time.sleep(getRand())
-    # addressInput = webDriverWait(driver,10).until(
-    #   EC.presence_of_element_located((By.ID,'addressLine'))
-    # )
+    addressInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'addressLine'))
+    )
 
-    # time.sleep(getRand())
-    # cityInput = webDriverWait(driver,10).until(
-    #   EC.presence_of_element_located((By.ID,'city'))
-    # )
+    addressInput.send_keys("house")
 
-    # # province
-    # time.sleep(getRand)
-    # provinceInput = webDriverWait(driver,10).until(
-    #   EC.presence_of_element_located((By.ID,'province'))
-    # )
+    cityInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'city'))
+    )
 
-    # provinceOptions = provinceInput.find_elements_by_tag_name('option')
+    cityInput.send_keys("Toronto")
 
-    # print("pringing province options ")
-    # for option in all_options:
-    #   print("Value is %s" % option.get_attribute("value"))
+    # province
+    provinceInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located((By.ID,'regionCode'))
+    )
 
-    #   if option.get_attribute("value") == "Ontario":
-    #     print("ontario is an option")
+    print("finding province options...")
+    provinceOptions = provinceInput.find_elements_by_tag_name('option')
+    print("printing province options ")
+    for option in provinceOptions:
+      print("Value is %s" % option.get_attribute("value"))
+
+      if option.get_attribute("value") == "ON":
+        print("ontario is an option")
+        break
 
 
     # email
@@ -137,8 +139,8 @@ while not isComplete:
     # click the continue button again 
 
 
-  except:
-    print("what")
+  except Exception as e:
+    print("error :( ", e)
     continue
 
 
