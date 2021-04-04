@@ -181,6 +181,15 @@ while not isComplete:
     cvvInput.send_keys("123")
 
     print("horraaayyy")
+
+
+    # place order button
+
+    placeOrderInput = WebDriverWait(driver,10).until(
+      EC.presence_of_element_located(BY.CSS_SELECTOR,'#posElement > section > section.cost-sum-section > button > span')
+    )
+
+    # placeOrderInput.click()
  
     # click the continue button again 
 
