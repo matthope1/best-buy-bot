@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 import time
 import random
-
+import info
 
 # options = uc.ChromeOptions()
 # options.add_experimental_option('exclueSwitches', ["enabled-logging"])
@@ -16,11 +16,7 @@ driver.get('https://www.bestbuy.ca/en-ca/product/apple-61w-usb-c-power-adapter-m
 
 def getRand():
   randNum = random.randint(1,4)
-  # print("randNum: ")
-  # print(randNum)
   return randNum 
-
-print(driver.title)
 
 isComplete = False
 
@@ -31,17 +27,17 @@ while not isComplete:
       EC.element_to_be_clickable((By.CSS_SELECTOR,'#test > button'))
     )
     isComplete = True;
-    print("button is clickable")
-
+    print("ATC button is clickable")
     atcBtn.click()
   except:
-    # refresh the browser 
-    # driver.refresh()
-    print("except")
+    # refresh the browser every 10s until the atc btn is clickable
+    time.sleep(10)
+    driver.refresh()
+    print("ATC button not avaliable.")
+    print("Refreshing page...")
     continue
 
   try:
-
     # wait for view cart button
     time.sleep(getRand())
     # time.sleep(4)
@@ -60,68 +56,51 @@ while not isComplete:
 
     # wait for checkout as guest button
     time.sleep(getRand())
-    # time.sleep(1)
     guestBtn = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.CSS_SELECTOR,'#root > div > div.other-context-sign-in-page-content-container > div > div > div > div.VyTnq._1tm4U.h8UpA._24uQr > div > div.guest-continue-link-wrapper > a > span'))
     )
     guestBtn.click()
 
-    # email
-    # firstname lastname
-    # addresss
-    # city
-    # province
-    # postal Code
-    # country
-    # phone number
-
-    print("form input...")
-    print("nosleep...")
+    print("Completing shipping form...")
     #fill in information on shipping form
-    # select the form items and add info to them by using element.sendKeys("data to insert into form")
-
+    # select the form items and add info to them by using element.sendKeys("info to insert into form")
     emailInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'email'))
     )
-    emailInput.send_keys("test@gmail.com")
+    emailInput.send_keys(info.email)
 
     firstNameInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'firstName'))
     )
     
-    firstNameInput.send_keys("john")
+    firstNameInput.send_keys(info.firstName)
 
     lastNameInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'lastName'))
     )
 
-    lastNameInput.send_keys("hampter")
+    lastNameInput.send_keys(info.lastName)
 
     addressInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'addressLine'))
     )
 
-    addressInput.send_keys("house")
+    addressInput.send_keys(info.address)
 
     cityInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'city'))
     )
 
-    cityInput.send_keys("Toronto")
+    cityInput.send_keys(info.city)
 
     # province
     provinceInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'regionCode'))
     )
 
-    print("finding province options...")
     provinceOptions = provinceInput.find_elements_by_tag_name('option')
-    print("printing province options ")
     for option in provinceOptions:
-      print("Value is %s" % option.get_attribute("value"))
-
-      if option.get_attribute("value") == "ON":
-        print("ontario is an option")
+      if option.get_attribute("value") == info.province:
         option.click()
         break
 
@@ -129,12 +108,13 @@ while not isComplete:
       EC.presence_of_element_located((By.ID,'postalCode'))
     )
 
-    postalCodeInput.send_keys("K1A 0B1")
+    postalCodeInput.send_keys(info.postalCode)
+
     phoneInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'phone'))
     )
 
-    phoneInput.send_keys("17052309906")
+    phoneInput.send_keys(info.phoneNumber)
   
     # after info is filled out, press the continue button
     time.sleep(getRand())
@@ -144,45 +124,43 @@ while not isComplete:
 
     continueBtn.click()
 
+    print("Completing cc form")
     # fill in credit card information
-
     ccInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'shownCardNumber'))
     )
 
-    # TODO
     # add credit card info to make a test purchase 
-    ccInput.send_keys("4024007103939509")
+    ccInput.send_keys(info.ccNum)
 
     expMonthInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'expirationMonth'))
     )
 
-    print("finding exp month options")
     expMonthOptions = expMonthInput.find_elements_by_tag_name('option')
-    print("printing exp month options ")
     for option in expMonthOptions:
-      print("Value is %s" % option.get_attribute("value"))
-
+      if option.get_attribute("value") == info.expMonth:
+        option.click()
+        break
+      
     expYearInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'expirationYear'))
     )
 
-    print("finding exp year options")
     expYearOptions = expYearInput.find_elements_by_tag_name('option')
-    print("printing exp year options")
 
     for option in expYearOptions:
-      print("Value is %s" % option.get_attribute("value"))
-
+      if option.get_attribute("value") == info.expYear: 
+        option.click()
+        break
+      
     cvvInput = WebDriverWait(driver,10).until(
       EC.presence_of_element_located((By.ID,'cvv'))
     )
 
-    cvvInput.send_keys("123")
+    cvvInput.send_keys(info.ccv)
 
     print("horraaayyy")
-
 
     # place order button
 
@@ -190,9 +168,13 @@ while not isComplete:
       EC.presence_of_element_located((By.CSS_SELECTOR,'#posElement > section > section.cost-sum-section > button > span'))
     )
 
+    # TODO: uncomment this when you're ready to test a real purchase
     # placeOrderInput.click()
  
     # click the continue button again 
+
+    # exit loop
+    isComplete = True
 
   except Exception as e:
     print("error :( ", e)
