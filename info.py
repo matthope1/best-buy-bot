@@ -15,7 +15,7 @@ email = ""
 address = "testaddy"
 city = "Toronto"
 province = "ON"
-postalCode = "L3T6Y5"
+postalCode = ""
 country = "Canada"
 phoneNumber = "123456789890"
 
